@@ -1,4 +1,4 @@
-name: Build AWS SDK for C++  
+name: Build vcpkg_core_lambda_gamelift_polly_s3
   
 on:   
   push:   

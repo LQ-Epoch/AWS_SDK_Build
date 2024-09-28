@@ -1,4 +1,4 @@
-name: Build AWS SDK for C++  
+name: Build vcpkg_all  
   
 on:   
   push:   
