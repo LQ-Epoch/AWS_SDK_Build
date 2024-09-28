@@ -47,4 +47,4 @@ jobs:
         
       - name: 上传到S3   
         run: |  
-          aws s3 cp sdk_build.zip s3://lq-private/vcpkg/vcpkg_all.zip  
+          aws s3 cp sdk_build.zip s3://lq-private/vcpkg/x64-windows/vcpkg_all.zip  
