@@ -47,4 +47,5 @@ jobs:
         
       - name: 上传到S3   
         run: |  
+          cd vcpkg
           aws s3 cp sdk_build.zip s3://lq-private/vcpkg/x64-windows/vcpkg_core_s3.zip  
