@@ -1,0 +1,50 @@
+name: Build AWS SDK for C++  
+  
+on:   
+  push:   
+    branches:   
+      - master   
+  pull_request:   
+    branches:   
+      - master  
+  
+jobs:   
+  build:   
+    runs-on: windows-latest   
+  
+    steps:   
+
+      - name: 查看VStudio的版本
+        id: vscheck   
+        run: |  
+          vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath  
+          echo "Visual Studio installation path: ${{ steps.vscheck.outputs.installationPath }}"  
+          cmake --version  
+      
+      - name: Configure AWS credentials   
+        uses: aws-actions/configure-aws-credentials@v1   
+        with:   
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}   
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
+          aws-region: us-west-1  
+          
+      - name: 安装vcpkg
+        run: |  
+          git clone https://github.com/microsoft/vcpkg.git
+          cd vcpkg
+          .\bootstrap-vcpkg.bat
+          
+      - name: 构建sdk  
+        run: |  
+          cd vcpkg
+          .\vcpkg install aws-sdk-cpp[core,lambda,gamelift,s3]:x64-windows --recurse
+
+      - name: 压缩sdk_build文件夹   
+        run: |  
+          cd vcpkg
+          cd installed
+          powershell Compress-Archive -Path x64-windows -DestinationPath sdk_build.zip  
+        
+      - name: 上传到S3   
+        run: |  
+          aws s3 cp sdk_build.zip s3://lq-private/vcpkg/vcpkg_core_lambda_gamelift_s3.zip  
