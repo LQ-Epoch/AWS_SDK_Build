@@ -1,4 +1,4 @@
-name: Build vcpkg_all  
+name: x64-windows Build vcpkg_all  
   
 on:   
   push:   

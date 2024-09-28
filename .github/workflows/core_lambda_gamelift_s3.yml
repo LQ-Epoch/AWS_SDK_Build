@@ -1,4 +1,4 @@
-name: Build vcpkg_core_lambda_gamelift_s3
+name: x64-windows Build vcpkg_core_lambda_gamelift_s3
   
 on:   
   push:   
