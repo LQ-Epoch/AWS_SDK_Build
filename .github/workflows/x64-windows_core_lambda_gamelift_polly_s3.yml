@@ -48,4 +48,5 @@ jobs:
       - name: 上传到S3   
         run: |  
           cd vcpkg
+          cd installed
           aws s3 cp sdk_build.zip s3://lq-private/vcpkg/x64-windows/vcpkg_core_lambda_gamelift_polly_s3.zip  
